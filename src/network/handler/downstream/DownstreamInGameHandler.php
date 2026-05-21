@@ -96,6 +96,16 @@ class DownstreamInGameHandler extends AbstractDownstreamPacketHandler
 		return $runtimeId;
 	}
 
+	public function handleLevelChunk(LevelChunkPacket $packet) : bool
+	{
+		return false;
+	}
+
+	public function handleNetworkChunkPublisherUpdate(NetworkChunkPublisherUpdatePacket $packet) : bool
+	{
+		return false;
+	}
+
 	public function handleMovePlayer(MovePlayerPacket $packet) : bool
 	{
 		$packet->actorRuntimeId = $this->rewriteLocalRuntimeId($packet->actorRuntimeId);

@@ -73,6 +73,16 @@ class UpstreamInGameHandler extends AbstractUpstreamPacketHandler
 		return true;
 	}
 
+	public function handlePlayerAuthInput(PlayerAuthInputPacket $packet) : bool
+	{
+		return false;
+	}
+
+	public function handleInventoryTransaction(InventoryTransactionPacket $packet) : bool
+	{
+		return false;
+	}
+
 	public function handleMovePlayer(MovePlayerPacket $packet) : bool
 	{
 		$packet->actorRuntimeId = $this->rewriteClientRuntimeId($packet->actorRuntimeId);

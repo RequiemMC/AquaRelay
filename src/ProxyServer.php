@@ -378,6 +378,27 @@ class ProxyServer
 		return null;
 	}
 
+	public function getPlayerByPrefix(string $name) : ?Player
+	{
+		$found = null;
+		$name = strtolower($name);
+		$delta = PHP_INT_MAX;
+		foreach($this->getOnlinePlayers() as $player){
+			if(stripos($player->getName(), $name) === 0){
+				$curDelta = strlen($player->getName()) - strlen($name);
+				if($curDelta < $delta){
+					$found = $player;
+					$delta = $curDelta;
+				}
+				if($curDelta === 0){
+					break;
+				}
+			}
+		}
+
+		return $found;
+	}
+
 	public function broadcastMessage(string $message) : void
 	{
 		foreach ($this->getOnlinePlayers() as $player) {

@@ -60,26 +60,6 @@ class TransferCallback
 	private function handlePhase1() : bool
 	{
 		$this->phase = self::PHASE_2;
-		$rewriteData = $this->player->getRewriteData();
-		$session = $this->player->getNetworkSession();
-
-		if ($rewriteData->dimension === $this->targetDimension) {
-			return true;
-		}
-
-		$spawnPos = $rewriteData->spawnPosition ?? new Vector3(0, 64, 0);
-		$fakePosition = $spawnPos->add(-2000, 0, -2000);
-
-		PlayerRewriteUtils::injectPosition(
-			$session,
-			$fakePosition,
-			$rewriteData->pitch,
-			$rewriteData->yaw,
-			$rewriteData->entityId
-		);
-
-		$rewriteData->dimension = $this->targetDimension;
-
 		return true;
 	}
 
@@ -147,6 +127,7 @@ class TransferCallback
 	{
 		$rewriteData = $this->player->getRewriteData();
 		$rewriteData->transferCallback = null;
+		$rewriteData->postTransferSpawnInitialized = false;
 
 		$this->player->getNetworkSession()->getLogger()->warning('Transfer failed, attempting fallback');
 		$this->player->tryFallbackOrDisconnect();
